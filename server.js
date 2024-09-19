@@ -22,7 +22,7 @@ connection.on("error", (err) => {
 app.use(express.json());
 
 // routing
-// app.use("/users", require("./routes/users"));
+app.use("/users", require("./routes/users"));
 app.use("/products", require("./routes/products"));
 app.use("/orders", require("./routes/orders"));
 
