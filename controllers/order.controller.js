@@ -33,6 +33,19 @@ function index(req, res) {
     });
 }
 
+function show(req, res) {
+  if (res.order) {
+    return res.status(200).json({
+      message: "order retrieved successfully!",
+      order: res.order,
+    });
+  } else {
+    return res.status(404).json({
+      message: res.message,
+    });
+  }
+}
+
 function store(req, res) {
   Product.findById(req.body.id).then((product) => {
     if (product) {
@@ -49,13 +62,29 @@ function store(req, res) {
       });
     } else {
       res.status(404).json({
-        message: "order not found!",
+        message: "product not found!",
       });
     }
   });
 }
 
+function destroy(req, res) {
+  if (res.order) {
+    Order.deleteOne({ _id: res.order.orderId }).then(() => {
+      return res.status(200).json({
+        message: "order deleted successfully!",
+      });
+    });
+  } else {
+    return res.status(404).json({
+      message: res.message,
+    });
+  }
+}
+
 module.exports = {
   index,
   store,
+  show,
+  destroy,
 };
